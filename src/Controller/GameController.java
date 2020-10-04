@@ -44,8 +44,6 @@ public class GameController implements Initializable {
     @FXML
     private Line pieDerecho;
 
-
-
     @FXML
     private Button btnCheck;
 
@@ -57,19 +55,19 @@ public class GameController implements Initializable {
 
     @FXML
     void verificaLetra(MouseEvent event) {
+
         if(letras.buscarLetra(txtPalabra.getText().charAt(0))) {
             lblMuestraLetras.setText(letras.getMascara());
-
+            System.out.println(letras.getMascara());
             if(letras.verificarPalabra()) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Congratulations");
                 alert.setHeaderText(null);
-                alert.setContentText("Has ganado " + letras.getMascara());
-
+                alert.setContentText("Has ganado!!! ");
                 alert.showAndWait();
             }
         }
-        else if(letras.verificarLetra(txtPalabra.getText().charAt(0)) ==true) {
+        else if(letras.verificarLetra(txtPalabra.getText().charAt(0)) == true) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Ups");
             alert.setHeaderText(null);
@@ -79,18 +77,36 @@ public class GameController implements Initializable {
         }
         else {
             vidas.setText(letras.setVida(txtPalabra.getText().charAt(0)));
-            if(letras.verificarError()) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("F");
-                alert.setHeaderText(null);
-                alert.setContentText("Lo siento se acabaron los intentos, la palabra era: " + letras.getPalabra());
+            if(letras.getVida()==5){
+                head.setVisible(true);
+                eyes.setVisible(true);
+                boca.setVisible(true);
+            }
+            if(letras.getVida()==4){
+                torso.setVisible(true);
+            }
+            if(letras.getVida()==3){
+                manoIzquierda.setVisible(true);
+            }
+            if(letras.getVida()==2){
+                manoDerecha.setVisible(true);
+            }
+            if(letras.getVida()== 1){
+                pieIzquierdo.setVisible(true);
 
-                alert.showAndWait();
+            }
+            if(letras.getVida() == 0){
+                pieDerecho.setVisible(true);
+                if(letras.verificarError()) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("F");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Lo siento se acabaron los intentos, la palabra era: " + letras.getPalabra());
+                    alert.showAndWait();
+                }
             }
         }
-
     }
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -108,15 +124,11 @@ public class GameController implements Initializable {
         manoIzquierda.setVisible(false);
         pieDerecho.setVisible(false);
         pieIzquierdo.setVisible(false);
-
         letras = new Letras();
         letras.setPalabra();
         letras.setMascara();
         lblMuestraLetras.setText(letras.getMascara());
-        vidas.setText("vidas " +letras.getVida());
-
+        vidas.setText("vidas: " +letras.getVida());
     }
-
-
 
 }
