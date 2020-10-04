@@ -51,7 +51,7 @@ public class Letras {
     public void setMascara() {
         copiaPalabra = palabra.toCharArray();
         for(int x=0; x<copiaPalabra.length;x++) {
-            copiaPalabra[x] = 'x';
+            copiaPalabra[x] = '_';
         }
     }
 
