@@ -9,9 +9,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.scene.control.Alert;
+import javafx.stage.Stage;
+
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.scene.control.Alert;
+
+
 
 public class GameController implements Initializable {
 
@@ -55,57 +59,67 @@ public class GameController implements Initializable {
 
     @FXML
     void verificaLetra(MouseEvent event) {
-
-        if(letras.buscarLetra(txtPalabra.getText().charAt(0))) {
-            lblMuestraLetras.setText(letras.getMascara());
-            System.out.println(letras.getMascara());
-            if(letras.verificarPalabra()) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Congratulations");
+        try {
+            if(txtPalabra.getText().isEmpty()){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Vacio");
                 alert.setHeaderText(null);
-                alert.setContentText("Has ganado!!! ");
+                alert.setContentText("Debes introducir una letra " );
                 alert.showAndWait();
-            }
-        }
-        else if(letras.verificarLetra(txtPalabra.getText().charAt(0)) == true) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Ups");
-            alert.setHeaderText(null);
-            alert.setContentText("Letra repetida");
-
-            alert.showAndWait();
-        }
-        else {
-            vidas.setText(letras.setVida(txtPalabra.getText().charAt(0)));
-            if(letras.getVida()==5){
-                head.setVisible(true);
-                eyes.setVisible(true);
-                boca.setVisible(true);
-            }
-            if(letras.getVida()==4){
-                torso.setVisible(true);
-            }
-            if(letras.getVida()==3){
-                manoIzquierda.setVisible(true);
-            }
-            if(letras.getVida()==2){
-                manoDerecha.setVisible(true);
-            }
-            if(letras.getVida()== 1){
-                pieIzquierdo.setVisible(true);
 
             }
-            if(letras.getVida() == 0){
-                pieDerecho.setVisible(true);
-                if(letras.verificarError()) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("F");
+
+            if(letras.buscarLetra(txtPalabra.getText().charAt(0))) {
+                lblMuestraLetras.setText(letras.getMascara());
+                System.out.println(letras.getMascara());
+                if(letras.verificarPalabra()) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Congratulations");
                     alert.setHeaderText(null);
-                    alert.setContentText("Lo siento se acabaron los intentos, la palabra era: " + letras.getPalabra());
+                    alert.setContentText("Has ganado!!! ");
                     alert.showAndWait();
                 }
             }
+            else {
+                vidas.setText("Vidas: " + letras.setVida(txtPalabra.getText().charAt(0)));
+                if (letras.getVida() == 5) {
+                    head.setVisible(true);
+                    eyes.setVisible(true);
+                    boca.setVisible(true);
+                }
+                if (letras.getVida() == 4) {
+                    torso.setVisible(true);
+                }
+                if (letras.getVida() == 3) {
+                    manoIzquierda.setVisible(true);
+                }
+                if (letras.getVida() == 2) {
+                    manoDerecha.setVisible(true);
+                }
+                if (letras.getVida() == 1) {
+                    pieIzquierdo.setVisible(true);
+
+                }
+                if (letras.getVida() == 0) {
+                    pieDerecho.setVisible(true);
+                    if (letras.verificarError()) {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("F");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Lo siento se acabaron los intentos, la palabra era: " + letras.getPalabra());
+                        alert.showAndWait();
+                        Stage stage = (Stage) btnCheck.getScene().getWindow();
+                        stage.close();
+                    }
+                }
+            }
+        }catch (Exception e){
+            System.out.println("holi");
         }
+
+
+
+
     }
 
     @Override

@@ -36,17 +36,6 @@ public class Letras {
         return bandera;
     }
 
-    public boolean verificarLetra(char str) {
-        boolean repetido = false;
-        for(int i=0; i<copiaPalabra.length;i++) {
-            System.out.println(" "+copiaPalabra[i]);
-            if(copiaPalabra[i] == str) {
-                repetido = true;
-            }
-        }
-        System.out.println(repetido);
-        return repetido;
-    }
 
     public void setMascara() {
         copiaPalabra = palabra.toCharArray();
